@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Book Details</title>
+    <link rel="stylesheet" href=" {{ url_for('static', filename='book_details.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="mid_section">
+            <h1> Here are more details about this book: </h1>
+            <p>Book title: {{ all_details[0] }}<br> Book ISBN: {{ all_details[1] }}<br> Book Publication Year:
+                {{ all_details[2] }}<br> Rating: {{ all_details[3] }}<br> ------------------------------------- <br>
+                Author Name: {{ all_details[4] }}<br> Author Birth Date:{{ all_details[5] }}<br>
+                Author Death Year: {{ all_details[6] }}<br></p>
+        </div>
+        <div class="nav_links">
+                <p> <a href="/"> Home </a> </p>
+                <p> <a href="/add_book"> Add a book </a> </p>
+                <p> <a href="/add_author"> Add an author </a> </p>
+        </div>
+    </div>
+</body>
+</html>

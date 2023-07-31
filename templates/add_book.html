@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add an Book</title>
+    <link rel="stylesheet" href=" {{ url_for('static', filename='add_book.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% if state == 'post' %}
+            <div class="top_section">
+                <h2> Book [ {{ title }} ] successfully added to library</h2>
+            </div>
+        {% else %}
+            <div>
+                <h2> Add a book to your library</h2>
+            </div>
+            <div class="mid_section">
+                <form method="POST" action="/add_book">
+                    <label for="title">Title:</label><br>
+                    <input type="text" id="title" name="title" placeholder="*"><br>
+                    <label for="isbn">ISBN:</label><br>
+                    <input type="text" id="isbn" name="isbn"><br>
+                    <label for="year">Publication year:</label><br>
+                    <input type="text" id="year" name="year" placeholder="*"><br>
+                    <label for="authors">Authors:</label><br>
+                    <select name="authors" id="authors">
+                        <option value="" disabled selected>*Choose book author</option>
+                        {% for user in all_users%}
+                            <option value= "{{user[1]}}"> {{ user[0] }}</option>
+                        {% endfor %}
+                    </select><br>
+                    <label for="rating">Rating:</label><br>
+                    <select name="rating" id="rating">
+                        <option value="" selected>Choose book rating</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select><br>
+                    <input type="submit" value="Add">
+                </form>
+            </div>
+        {% endif %}
+        <div class="nav_links">
+            <p> <a href="/"> Home </a> </p>
+            <p> <a href="/add_book"> Add a book </a> </p>
+            <p> <a href="/add_author"> Add an author </a> </p>
+        </div>
+    </div>
+</body>
+</html>
+
+

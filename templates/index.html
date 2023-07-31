@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+   <div class="container">
+       <div class="h_one">
+           <h1>Welcome to my Library</h1>
+       </div>
+       <div class="top_section">
+           <form action="/sorting" method="GET">
+               <button type="submit" name="sort" value="title"> Sort by title </button>
+           </form>
+           <form action="/sorting" method="GET">
+              <button type="submit" name="sort" value="author"> Sort by author </button>
+           </form>
+           <form id="searchForm" action="/search">
+               <input type="text" id="searchQuery" name="search_result" placeholder="Search by book title or author name">
+               <button type="submit">Search</button>
+           </form>
+           {% if flash_message %}
+                <div class="flash-message">
+                    <p>{{ flash_message }}</p>
+                </div>
+           {% endif %}
+       </div>
+       {% if search_results %}
+            <div class="mid_section">
+                <p> Here are books that match your query</p>
+                {% for book_detail in search_results %}
+                    <a href="/book_details/{{ book_detail.get('book_id') }}">{{ book_detail.get('title') }}</a> by
+               {{ book_detail.get('author') }} ----------------------------------------------------------------
+               <a href="/book/{{ book_detail.get('book_id') }}/delete"> Delete Book </a> |
+               <a href="/author/{{ book_detail.get('author_id') }}/delete"> Delete Author </a>
+               | Rating: {{ book_detail.get('rating') }}<br>
+                {% endfor%}
+                <p> <a href="/"> Load all books </a> </p>
+            </div>
+       {% else %}
+            {% if sorted_results %}
+                <div class="mid_section">
+                    {% for book_detail in sorted_results %}
+                        <a href="/book_details/{{ book_detail.get('book_id') }}">{{ book_detail.get('title') }}</a> by
+                       {{ book_detail.get('author') }} ----------------------------------------------------------------
+                       <a href="/book/{{ book_detail.get('book_id') }}/delete"> Delete Book </a> |
+                       <a href="/author/{{ book_detail.get('author_id') }}/delete"> Delete Author </a>
+                       | Rating: {{ book_detail.get('rating') }}<br>
+                    {% endfor%}
+                </div>
+            {% else %}
+                <div class="mid_section">
+                    {% for name_title_rating in titles_and_names_ratings %}
+                        <a href="/book_details/{{ name_title_rating[3] }}">{{ name_title_rating[0] }}</a> by
+                   {{ name_title_rating[1] }} ----------------------------------------------------------------
+                   <a href="/book/{{ name_title_rating[3] }}/delete"> Delete Book </a> |
+                   <a href="/author/{{ name_title_rating[4] }}/delete"> Delete Author </a>
+                   | Rating: {{ name_title_rating[2] }}<br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+       {% endif %}
+       <div class="recommend">
+           <p> Here are books recommendations based on your book list </p>
+           {% for title in response %}
+                {{ title }} <br>
+           {% endfor %}
+       </div>
+       <div class="nav_links">
+            <p> <a href="/add_book"> Add a book </a> </p>
+           <p> <a href="/add_author"> Add an author </a> </p>
+       </div>
+   </div>
+</body>
+</html>
+
